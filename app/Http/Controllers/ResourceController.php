@@ -7,13 +7,20 @@ use App\Models\Subject;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-// peachepe
 class ResourceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $resources = Resource::with(['user', 'subject'])->latest()->get();
-        return view('resources.index', compact('resources'));
+        $subjects = Subject::all();
+        $query = Resource::with(['user', 'subject.semester']);
+
+        if ($request->has('subject_id')) {
+            $query->where('subject_id', $request->subject_id);
+        }
+
+        $resources = $query->latest()->get();
+
+        return view('resources.index', compact('resources', 'subjects'));
     }
 
     public function create()
@@ -32,7 +39,6 @@ class ResourceController extends Controller
         ]);
 
         $path = $request->file('file')->store('resources', 'public');
-
         $user = User::first() ?? User::factory()->create();
 
         Resource::create([
@@ -50,5 +56,34 @@ class ResourceController extends Controller
     {
         $resource->load(['user', 'subject', 'comments.user']);
         return view('resources.show', compact('resource'));
+    }
+
+    public function edit(Resource $resource)
+    {
+        $subjects = Subject::all();
+        return view('resources.edit', compact('resource', 'subjects'));
+    }
+
+    public function update(Request $request, Resource $resource)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'subject_id' => 'required|exists:subjects,id',
+        ]);
+
+        $resource->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'subject_id' => $request->subject_id,
+        ]);
+
+        return redirect()->route('resources.index')->with('success', 'Recurso actualizado con éxito.');
+    }
+
+    public function destroy(Resource $resource)
+    {
+        $resource->delete();
+        return redirect()->route('resources.index')->with('success', 'Recurso eliminado correctamente.');
     }
 }
