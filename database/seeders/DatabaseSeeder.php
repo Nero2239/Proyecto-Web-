@@ -8,7 +8,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Aquí es donde se manda a llamar a tu AcademicSeeder
+        // llamar al academic seedr para cargar los datos
         $this->call(AcademicSeeder::class);
     }
 }

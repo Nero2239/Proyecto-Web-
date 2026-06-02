@@ -6,11 +6,11 @@
     
     <div class="flex flex-wrap gap-2 pb-4 border-b border-slate-200">
         <a href="{{ route('resources.index') }}" class="px-4 py-2 rounded-xl text-sm font-semibold {{ !request('subject_id') ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
-            🌟 Todos
+            Todos
         </a>
         @foreach($subjects as $subject)
             <a href="{{ route('resources.index', ['subject_id' => $subject->id]) }}" class="px-4 py-2 rounded-xl text-sm font-semibold {{ request('subject_id') == $subject->id ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200' }}">
-                📚 {{ $subject->name }}
+                {{ $subject->name }}
             </a>
         @endforeach
     </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 flex justify-between items-center text-xs font-medium text-slate-400">
                 <span>Autor: {{ $resource->user->name }}</span>
-                <a href="{{ route('resources.show', $resource->id) }}" class="text-blue-600 font-bold hover:text-blue-700">Detalles →</a>
+                <a href="{{ route('resources.show', $resource->id) }}" class="text-blue-600 font-bold hover:text-blue-700">Detalles ></a>
             </div>
         </div>
     @empty

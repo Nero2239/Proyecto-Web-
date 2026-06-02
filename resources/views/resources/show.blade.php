@@ -5,7 +5,7 @@
     <div class="mb-6">
         <span class="text-sm font-bold uppercase px-3 py-1 bg-blue-100 text-blue-700 rounded">{{ $resource->subject->name }}</span>
         <h1 class="text-3xl font-black mt-4">{{ $resource->title }}</h1>
-        <p class="text-slate-500 mt-2">Subido por {{ $resource->user->name }} • {{ $resource->created_at->diffForHumans() }}</p>
+        <p class="text-slate-500 mt-2">Subido por {{ $resource->user->name }} - {{ $resource->created_at->diffForHumans() }}</p>
     </div>
 
     <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 mb-8">
